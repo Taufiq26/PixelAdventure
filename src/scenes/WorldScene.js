@@ -9,18 +9,24 @@ export default class WorldScene extends Phaser.Scene {
 
   create() {
     const map = this.make.tilemap({ key: 'world' })
-    const tileset = map.addTilesetImage('ground_flat', 'tiles')
+    const ground_flat = map.addTilesetImage('ground_flat', 'ground_flat')
+    const ground_elevation = map.addTilesetImage('ground_elevation', 'ground_elevation')
+    const tree = map.addTilesetImage('tree', 'tree')
 
-    const ground = map.createLayer('Ground', tileset)
-    const walls = map.createLayer('Walls', tileset)
+    const ground_lv1 = map.createLayer('Floor lv1/Ground', ground_flat)
+    const ground_lv2 = map.createLayer('Floor lv2/Ground lv2', ground_elevation)
+    const walls = map.createLayer('Floor lv1/Walls', ground_flat)
+    const deco_tree = map.createLayer('Decorations', tree)
 
     walls.setCollisionByProperty({ collides: true })
+    ground_lv2.setCollisionByProperty({ collides: true })
+    deco_tree.setCollisionByProperty({ collides: true })
 
     const spawn = map.findObject('Objects', o => o.name === 'PlayerSpawn')
     const g = this.add.graphics()
     g.fillStyle(0x00ff88, 1)
-    g.fillRect(0, 0, 16, 16)
-    g.generateTexture('player', 16, 16)
+    g.fillRect(0, 0, 32, 32)
+    g.generateTexture('player', 32, 32)
     g.destroy()
 
     this.player = new Player(this, spawn.x, spawn.y)

@@ -7,7 +7,9 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('tiles', 'assets/Terrain/Ground/Tilemap_Flat.png')
+    this.load.image('ground_flat', 'assets/Terrain/Ground/Tilemap_Flat.png')
+    this.load.image('ground_elevation', 'assets/Terrain/Ground/Tilemap_Elevation.png')
+    this.load.image('tree', 'assets/Resources/Trees/Tree.png')
     this.load.tilemapTiledJSON('world', 'assets/Maps/world.json')
   }
 

@@ -8,6 +8,12 @@ export default class WorldScene extends Phaser.Scene {
   }
 
   create() {
+    const g = this.add.graphics()
+    g.fillStyle(0x00ff88, 1)
+    g.fillRect(0, 0, 16, 16)
+    g.generateTexture('player', 16, 16)
+    g.destroy()
+
     this.player = new Player(this, 400, 300)
 
     this.cameras.main.startFollow(this.player.sprite)

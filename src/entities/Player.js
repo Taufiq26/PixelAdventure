@@ -7,7 +7,7 @@ export default class Player {
     this.isLocked = false // nanti dipakai saat attack / skill
 
     // Create a rectangle graphic instead of null sprite
-    this.sprite = scene.add.rectangle(x, y, 16, 16, 0x00ff88)
+    this.sprite = scene.physics.add.sprite(x, y, 'player')
     scene.physics.add.existing(this.sprite)
   }
 

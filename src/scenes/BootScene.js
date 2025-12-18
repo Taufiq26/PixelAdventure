@@ -7,7 +7,8 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    // nanti load asset di sini
+    this.load.image('tiles', 'assets/Terrain/Ground/Tilemap_Flat.png')
+    this.load.tilemapTiledJSON('world', 'assets/Maps/world.json')
   }
 
   create() {

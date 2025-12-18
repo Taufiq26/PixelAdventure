@@ -9,6 +9,8 @@ export default class Player {
     // Create a rectangle graphic instead of null sprite
     this.sprite = scene.physics.add.sprite(x, y, 'player')
     scene.physics.add.existing(this.sprite)
+
+    this.sprite.setCollideWorldBounds(false)
   }
 
   move(direction) {

@@ -8,25 +8,34 @@ export default class WorldScene extends Phaser.Scene {
   }
 
   create() {
+    const map = this.make.tilemap({ key: 'world' })
+    const tileset = map.addTilesetImage('ground_flat', 'tiles')
+
+    const ground = map.createLayer('Ground', tileset)
+    const walls = map.createLayer('Walls', tileset)
+
+    walls.setCollisionByProperty({ collides: true })
+
+    const spawn = map.findObject('Objects', o => o.name === 'PlayerSpawn')
     const g = this.add.graphics()
     g.fillStyle(0x00ff88, 1)
     g.fillRect(0, 0, 16, 16)
     g.generateTexture('player', 16, 16)
     g.destroy()
 
-    this.player = new Player(this, 400, 300)
+    this.player = new Player(this, spawn.x, spawn.y)
+    this.physics.add.collider(this.player.sprite, walls)
 
+    this.cameras.main.setBounds(
+      0,
+      0,
+      map.widthInPixels,
+      map.heightInPixels
+    )
     this.cameras.main.startFollow(this.player.sprite)
 
     this.cursors = this.input.keyboard.createCursorKeys()
     this.keys = this.input.keyboard.addKeys('W,A,S,D')
-
-    this.add.grid(
-      400, 300,
-      1600, 1200,
-      32, 32,
-      0x444444
-    )
   }
 
   update() {
@@ -48,5 +57,7 @@ export default class WorldScene extends Phaser.Scene {
     } else {
       this.player.move(direction)
     }
+
+    this.player.update?.()
   }
 }

@@ -23,11 +23,7 @@ export default class WorldScene extends Phaser.Scene {
     deco_tree.setCollisionByProperty({ collides: true })
 
     const spawn = map.findObject('Objects', o => o.name === 'PlayerSpawn')
-    const g = this.add.graphics()
-    g.fillStyle(0x00ff88, 1)
-    g.fillRect(0, 0, 32, 32)
-    g.generateTexture('player', 32, 32)
-    g.destroy()
+
 
     this.player = new Player(this, spawn.x, spawn.y)
     this.physics.add.collider(this.player.sprite, walls)

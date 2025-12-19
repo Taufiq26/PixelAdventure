@@ -12,6 +12,7 @@ export default class BootScene extends Phaser.Scene {
     this.load.image('tree', 'assets/Resources/Trees/Tree.png')
     this.load.tilemapTiledJSON('world', 'assets/Maps/world.json')
     this.load.spritesheet('Warrior_Blue', 'assets/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue.png', { frameWidth: 192, frameHeight: 192 })
+    this.load.spritesheet('Warrior_Blue_front-back', 'assets/Factions/Knights/Troops/Warrior/Blue/Warrior_Blue_front-back.png', { frameWidth: 192, frameHeight: 192 })
   }
 
   create() {
@@ -28,6 +29,30 @@ export default class BootScene extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     })
+
+    this.anims.create({
+      key: 'warrior_down',
+      frames: this.anims.generateFrameNumbers('Warrior_Blue_front-back', { start: 0, end: 5 }),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: 'warrior_up',
+      frames: this.anims.generateFrameNumbers('Warrior_Blue', { start: 36, end: 38 }),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    // Debug: Create animations for all 8 rows
+    for (let i = 0; i < 8; i++) {
+      this.anims.create({
+        key: `warrior_row_${i}`,
+        frames: this.anims.generateFrameNumbers('Warrior_Blue', { start: i * 6, end: (i * 6) + 5 }),
+        frameRate: 10,
+        repeat: -1
+      })
+    }
 
     this.scene.start('WorldScene')
   }

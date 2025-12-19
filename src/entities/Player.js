@@ -11,6 +11,14 @@ export default class Player {
     scene.physics.add.existing(this.sprite)
 
     this.sprite.setCollideWorldBounds(false)
+
+    // Debug: Cycle rows
+    this.debugRow = 0
+    scene.input.keyboard.on('keydown-F', () => {
+      this.debugRow = (this.debugRow + 1) % 8
+      console.log(`Debug: Playing Row ${this.debugRow}`)
+      this.sprite.anims.play(`warrior_row_${this.debugRow}`)
+    })
   }
 
   move(direction) {
@@ -19,12 +27,21 @@ export default class Player {
     const { x, y } = direction
     this.sprite.body.setVelocity(x * this.speed, y * this.speed)
 
-    this.sprite.anims.play('warrior_run', true)
+    // Priority: Vertical -> Horizontal
+    if (y > 0) {
+      this.sprite.anims.play('warrior_down', true)
+    } else if (y < 0) {
+      this.sprite.anims.play('warrior_up', true)
+    } else if (x !== 0) {
+      this.sprite.anims.play('warrior_run', true)
 
-    if (x < 0) {
-      this.sprite.setFlipX(true)
-    } else if (x > 0) {
-      this.sprite.setFlipX(false)
+      if (x < 0) {
+        this.sprite.setFlipX(true)
+      } else if (x > 0) {
+        this.sprite.setFlipX(false)
+      }
+    } else {
+      // Fallback if moving but speed is 0? Should be handled by stop()
     }
   }
 
